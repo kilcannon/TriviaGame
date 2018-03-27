@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
 // question set for game
 var trivia = {
   questions: [
@@ -81,6 +80,7 @@ var trivia = {
     var tHeader = $("thead");
     var tBody = $("tbody");
 
+    $("thead").show()
     tHeader.append(triviaTemp.questions[questionCounter].question)
     var newQuestion = $("<th align='center'>").text(triviaTemp.questions[questionCounter].question);
     for (var i = 0; i < 3; i++) {
@@ -96,13 +96,17 @@ var trivia = {
   function decrement() { //establishes countdown and display for gameTimer function
     timeRemaining--;
     if (timeRemaining >= 0) {
-      $(".game-time").html("Time remaining: " + "<p class='time-remaining'>" + timeRemaining + "<p>")
+      $(".game-time").html("<p>Time remaining: </p>" + "<p class='time-remaining'>" + timeRemaining + "</p>")
     }
     else {
       $(".game-time").html("Time's up!")
+      $("tbody").empty()
+      $("thead").empty()
       userIncorrectAnswer++
       questionCounter++
       stopCountdown()
+      questionTransition()
+      questionRemaining()
     }
   }
 
@@ -110,19 +114,24 @@ var trivia = {
     $("tr").on("click", function() {
       userAnswer = $(this).text()
       if (userAnswer === triviaTemp.questions[questionCounter].correctAnswer) {
+        $("thead").empty()
         $("thead").hide()
         $("tbody").html("<h2>Correct Answer!</h2>")
         userCorrectAnswer++
         questionCounter++
         stopCountdown()
         questionTransition()
+        questionRemaining()
       }
       else {
+        $("thead").empty()
         $("thead").hide()
         $("tbody").html("<h2>Incorrect answer!</h2>")
         userIncorrectAnswer++
         questionCounter++
         stopCountdown()
+        questionTransition()
+        questionRemaining()
       }
     })
   }
@@ -134,9 +143,9 @@ var trivia = {
   function questionTransition() {
     if (questionCounter < 10) {
       $(".next-question").show()
-      timeRemaining = 10
+      timeRemaining = 16
       $(".next-question").on("click", function() {
-          $(".next-question").hide()
+        $("tbody").empty()
       })
     }
     else {
@@ -145,6 +154,10 @@ var trivia = {
         "Correct answers: " + userCorrectAnswer + "<br>" + 
         "Incorrect answers: " + userIncorrectAnswer)
     }
+  }
+
+  function questionRemaining() {
+    $(".donut" + questionCounter).hide()
   }
 
   startGame()
