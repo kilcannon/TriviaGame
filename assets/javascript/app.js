@@ -140,13 +140,18 @@ var trivia = {
     clearInterval(timer)
   }
 
+  $(".next-question").on("click", function() { //move this event listener for the button to outside the function
+    $("tbody").empty()
+    questionDisplay()
+    gameTimer()
+    responseChecker()
+
+  })
+
   function questionTransition() {
     if (questionCounter < 10) {
       $(".next-question").show()
       timeRemaining = 16
-      $(".next-question").on("click", function() {
-        $("tbody").empty()
-      })
     }
     else {
       $("thead").hide()
