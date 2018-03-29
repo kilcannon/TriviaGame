@@ -45,7 +45,7 @@ var trivia = {
     },
     {
       question: 'What is the largest internal organ in the human body?',
-      answers: ['The liver', 'The stomach', 'The lungh'],
+      answers: ['The liver', 'The stomach', 'The lung'],
       correctAnswer: 'The liver'
     },
     {
@@ -61,17 +61,22 @@ var trivia = {
   var questionCounter = 0
   var userCorrectAnswer = 0
   var userIncorrectAnswer = 0
+  var mySound = new Audio("assets/images/background.mp3")
+  var doh = new Audio("assets/images/doh.mp3")
+  var woohoo = new Audio("assets/images/woohoo.mp3")
 
-
-  function startGame() {
-    $(".game-restart").hide()
-    $(".next-question").hide()
     $(".opening-instructions").on("click", function() {
       $(".opening-instructions").hide()
       questionDisplay()
       gameTimer()
       responseChecker()
     })
+
+  function startGame() {
+    $(".game-restart").hide()
+    $(".next-question").hide()
+    $(".opening-instructions").show()
+    // mySound.play()
   }
 
   function questionDisplay() { //sets questions and possible answers on the screen for user
@@ -102,6 +107,9 @@ var trivia = {
       $(".game-time").html("Time's up!")
       $("tbody").empty()
       $("thead").empty()
+      $("tbody").html("<h2>The correct answer was: </h2>" + "<h2>" + 
+        triviaTemp.questions[questionCounter].correctAnswer + "</h2>")
+      doh.play()
       userIncorrectAnswer++
       questionCounter++
       stopCountdown()
@@ -115,8 +123,9 @@ var trivia = {
       userAnswer = $(this).text()
       if (userAnswer === triviaTemp.questions[questionCounter].correctAnswer) {
         $("thead").empty()
-        $("thead").hide()
+        $("thead").hide()     
         $("tbody").html("<h2>Correct Answer!</h2>")
+        woohoo.play()
         userCorrectAnswer++
         questionCounter++
         stopCountdown()
@@ -126,7 +135,9 @@ var trivia = {
       else {
         $("thead").empty()
         $("thead").hide()
-        $("tbody").html("<h2>Incorrect answer!</h2>")
+        $("tbody").html("<h2>Incorrect answer!<br><br> The correct answer was: </h2>" + "<h2>" + 
+          triviaTemp.questions[questionCounter].correctAnswer + "</h2>")
+        doh.play()
         userIncorrectAnswer++
         questionCounter++
         stopCountdown()
@@ -140,12 +151,21 @@ var trivia = {
     clearInterval(timer)
   }
 
-  $(".next-question").on("click", function() { //move this event listener for the button to outside the function
+  $(".next-question").on("click", function() { //event listener to move to next question on click
     $("tbody").empty()
     questionDisplay()
     gameTimer()
     responseChecker()
+  })
 
+  $(".game-restart").on("click", function() { //event listener to move to next question on click
+    timeRemaining = 16
+    questionCounter = 0
+    userCorrectAnswer = 0
+    userIncorrectAnswer = 0
+    $("thead").empty()
+    $("tbody").empty()
+    startGame()
   })
 
   function questionTransition() {
@@ -155,9 +175,10 @@ var trivia = {
     }
     else {
       $("thead").hide()
-      $("tbody").html("Game Over! Here are the results of the game: <br>" + 
+      $("tbody").html("<h2>Game Over! Here are the results of your game: <br><br>" + 
         "Correct answers: " + userCorrectAnswer + "<br>" + 
-        "Incorrect answers: " + userIncorrectAnswer)
+        "Incorrect answers: " + userIncorrectAnswer) + "</h2>"
+      $(".game-restart").show()
     }
   }
 
