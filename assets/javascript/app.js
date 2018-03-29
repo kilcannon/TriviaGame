@@ -61,22 +61,20 @@ var trivia = {
   var questionCounter = 0
   var userCorrectAnswer = 0
   var userIncorrectAnswer = 0
-  var mySound = new Audio("assets/images/background.mp3")
   var doh = new Audio("assets/images/doh.mp3")
   var woohoo = new Audio("assets/images/woohoo.mp3")
 
-    $(".opening-instructions").on("click", function() {
+    $(".opening-instructions").on("click", function() { //sets event listener on opening instructions button
       $(".opening-instructions").hide()
       questionDisplay()
       gameTimer()
       responseChecker()
     })
 
-  function startGame() {
+  function startGame() { //initializes game
     $(".game-restart").hide()
     $(".next-question").hide()
     $(".opening-instructions").show()
-    // mySound.play()
   }
 
   function questionDisplay() { //sets questions and possible answers on the screen for user
@@ -118,7 +116,7 @@ var trivia = {
     }
   }
 
-  function responseChecker() {
+  function responseChecker() { //checks whether user's selected answer was correct
     $("tr").on("click", function() {
       userAnswer = $(this).text()
       if (userAnswer === triviaTemp.questions[questionCounter].correctAnswer) {
@@ -147,7 +145,7 @@ var trivia = {
     })
   }
 
-  function stopCountdown() {
+  function stopCountdown() { //clears timer
     clearInterval(timer)
   }
 
@@ -168,13 +166,13 @@ var trivia = {
     startGame()
   })
 
-  function questionTransition() {
+  function questionTransition() { //provides ability to move from question to question upon button click
     if (questionCounter < 10) {
       $(".next-question").show()
       timeRemaining = 16
     }
-    else {
-      $("thead").hide()
+    else {  //sets condition for results to be displayed at end of game
+      $("thead").hide()  
       $("tbody").html("<h2>Game Over! Here are the results of your game: <br><br>" + 
         "Correct answers: " + userCorrectAnswer + "<br>" + 
         "Incorrect answers: " + userIncorrectAnswer) + "</h2>"
@@ -182,7 +180,7 @@ var trivia = {
     }
   }
 
-  function questionRemaining() {
+  function questionRemaining() {  //sets donuts to disappear as game progresses with each question
     $(".donut" + questionCounter).hide()
   }
 
