@@ -65,7 +65,7 @@ var trivia = {
   var woohoo = new Audio("assets/images/woohoo.mp3")
 
     $(".opening-instructions").on("click", function() { //sets event listener on opening instructions button
-      $(".opening-instructions").hide()
+      $(".opening-instructions").fadeOut(750)
       questionDisplay()
       gameTimer()
       responseChecker()
@@ -141,6 +141,7 @@ var trivia = {
         stopCountdown()
         questionTransition()
         questionRemaining()
+        alienAttack()
       }
     })
   }
@@ -172,18 +173,30 @@ var trivia = {
       timeRemaining = 16
     }
     else {  //sets condition for results to be displayed at end of game
-      $("thead").hide()  
+      $("thead").hide()
       $("tbody").html("<h2>Game Over! Here are the results of your game: <br><br>" + 
         "Correct answers: " + userCorrectAnswer + "<br>" + 
         "Incorrect answers: " + userIncorrectAnswer) + "</h2>"
       $(".game-restart").show()
+      }
     }
-  }
+
+    function alienAttack () { //floats an alien across the screen once when an answer is incorrect
+      $(function(){
+          alien($("#alien"), 10000);
+      })
+
+      var alien = function($alien,speed){
+        $alien.animate({
+            "left": "100%"
+        }, speed);
+      }
+    }
 
   function questionRemaining() {  //sets donuts to disappear as game progresses with each question
-    $(".donut" + questionCounter).hide()
+    $(".donut" + questionCounter).fadeOut(1000)
   }
 
-  startGame()
+  startGame()  //launches game on page load
 
 })

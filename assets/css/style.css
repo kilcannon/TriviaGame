@@ -47,6 +47,12 @@ p.follower {
 	right: -250px;
 }
 
+.character-insert {
+	position: absolute;
+	bottom: 80px;
+	right: 0px;
+}
+
 .homer {
 	position: absolute;
 	top: -90px;
@@ -234,6 +240,15 @@ p.time-remaining {
 	background-color: crimson;
 	color: white;
 	font-family: 'Mada', sans-serif;
+}
+
+#alien {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 20%;
+    height: 20%;
+    background: url("../images/kang_small.png") 0 0 no-repeat;
 }
 
 table  {
