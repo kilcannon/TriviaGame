@@ -174,7 +174,7 @@ var trivia = {
     }
     else {  //sets condition for results to be displayed at end of game
       $("thead").hide()
-      $("tbody").html("<h2>Game Over! Here are the results of your game: <br><br>" + 
+      $("tbody").html("<h2>Game Over! <br><br> Here are the results of your game:<br>" + 
         "Correct answers: " + userCorrectAnswer + "<br>" + 
         "Incorrect answers: " + userIncorrectAnswer) + "</h2>"
       $(".game-restart").show()
